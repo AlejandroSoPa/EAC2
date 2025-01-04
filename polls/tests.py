@@ -14,11 +14,17 @@ class AdminPanelTests(StaticLiveServerTestCase):
         opts = Options()
         cls.selenium = WebDriver(options=opts)
         cls.selenium.implicitly_wait(5)
- 
+
+        # Creació del superusuari
+        user = User.objects.create_user("isard", "isard@isardvdi.com", "pirineus")
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+
     @classmethod
     def tearDownClass(cls):
-        # tanquem browser
-        # comentar la propera línia si volem veure el resultat de l'execució al navegador
+        # Tanquem el navegador
+        # Comentar la següent línia si es vol veure el resultat al navegador
         cls.selenium.quit()
         super().tearDownClass()
 
