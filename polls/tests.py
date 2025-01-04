@@ -24,7 +24,6 @@ class AdminPanelTests(StaticLiveServerTestCase):
     @classmethod
     def tearDownClass(cls):
         # Tanquem el navegador
-        # Comentar la següent línia si es vol veure el resultat al navegador
         cls.selenium.quit()
         super().tearDownClass()
 
@@ -42,7 +41,7 @@ class AdminPanelTests(StaticLiveServerTestCase):
         password_input.send_keys(Keys.RETURN)
 
         # Comprovem que s’ha iniciat sessió correctament
-        self.selenium.find_element(By.XPATH, "//a[text()='Log out']")
+        self.selenium.find_element(By.XPATH, "//button[@type='submit' and text()='Log out']")
 
     def test_element_no_exists(self):
         # Intentem trobar un element que no hi hauria de ser
