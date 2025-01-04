@@ -44,14 +44,6 @@ class AdminPanelTests(StaticLiveServerTestCase):
         # Comprovem que s’ha iniciat sessió correctament
         self.selenium.find_element(By.XPATH, "//button[@type='submit' and text()='Log out']")
 
-    def test_non_existant_element(self):
-        # Intentem trobar un element que no hi hauria de ser
-        try:
-            self.selenium.find_element(By.XPATH, "//a[text()='Element Inexistent']")
-            assert False, "Trobat element que NO hi ha de ser"
-        except NoSuchElementException:
-            pass
-    
     def test_create_poll(self):
         # Accedim a la pàgina de creació de la enquesta
         self.selenium.find_element(By.XPATH, "//a[@aria-describedby='polls-question']").click()
@@ -70,3 +62,13 @@ class AdminPanelTests(StaticLiveServerTestCase):
 
         # Comprovem que la nova enquesta ha estat creada
         self.selenium.find_element(By.XPATH, "//a[text()='Què és millor?']")
+
+    def test_non_existant_element(self):
+        # Intentem trobar un element que no hi hauria de ser
+        try:
+            self.selenium.find_element(By.XPATH, "//a[text()='Element Inexistent']")
+            assert False, "Trobat element que NO hi ha de ser"
+        except NoSuchElementException:
+            pass
+    
+    
