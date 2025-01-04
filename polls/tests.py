@@ -12,6 +12,7 @@ class AdminPanelTests(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         opts = Options()
+        opts.add_argument("--headless")
         cls.selenium = WebDriver(options=opts)
         cls.selenium.implicitly_wait(5)
 
