@@ -45,6 +45,12 @@ class AdminPanelTests(StaticLiveServerTestCase):
         self.selenium.find_element(By.XPATH, "//button[@type='submit' and text()='Log out']")
 
     def test_create_poll(self):
+        # Creació del superusuari
+        user = User.objects.create_user("isard", "isard@isardvdi.com", "pirineus")
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+
         # Accedim a la pàgina d'inici de sessió del panell d’administració
         self.selenium.get(f"{self.live_server_url}/admin/login/")
 
