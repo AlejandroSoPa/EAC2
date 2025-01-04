@@ -45,7 +45,7 @@ class AdminPanelTests(StaticLiveServerTestCase):
         self.selenium.find_element(By.XPATH, "//button[@type='submit' and text()='Log out']")
 
     def test_create_poll(self):
-        self.selenium.find_element("//a[@aria-describedby='polls-question']").click()
+        self.selenium.find_element(By.XPATH, "//a[@href='/admin/polls/question/add/']").click()
 
 
         # Localitzem els camps del formulari
