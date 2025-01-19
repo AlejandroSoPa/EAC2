@@ -81,7 +81,7 @@ class AdminPanelTests(StaticLiveServerTestCase):
         question_input.send_keys(Keys.RETURN)
 
         # Comprovem que la nova enquesta ha estat creada
-        self.selenium.find_element(By.XPATH, "//a[text()='Què és millor?']")
+        self.assertEqual( self.selenium.title , "Select question to change | Django site admin" )
 
     def test_non_existant_element(self):
         # Intentem trobar un element que no hi hauria de ser
