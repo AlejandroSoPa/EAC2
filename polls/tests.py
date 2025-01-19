@@ -42,7 +42,7 @@ class AdminPanelTests(StaticLiveServerTestCase):
         password_input.send_keys(Keys.RETURN)
 
         # Comprovem que s’ha iniciat sessió correctament
-        self.selenium.find_element(By.XPATH, "//button[@type='submit' and text()='Log out']")
+        self.assertEqual( self.selenium.title , "Site administration | Django site admin" )
 
     def test_create_poll(self):
         # Creació del superusuari
