@@ -93,16 +93,22 @@ class AdminPanelTests(StaticLiveServerTestCase):
         # Verificar que las opciones fueron creadas correctamente
         choices_link = self.selenium.find_element(By.XPATH, "//th[@id='polls-choice']/a")
         choices_link.click()
-        # Localizar el texto del paginador
-        paginator = self.selenium.find_element(By.CLASS_NAME, "paginator")
-        paginator_text = paginator.text.strip()  # Obtener el texto del paginador
-        total_opciones = int(paginator_text.split(" ")[0])  # Extraer el número total de opciones desde el texto
+
+        try:
+            paginator = self.selenium.find_element(By.CLASS_NAME, "paginator")
+            paginator_text = paginator.text.strip()
+            print(f"Texto del paginador: {repr(paginator_text)}")  # Depuración
+            primera_linea = paginator_text.split("\n")[0]
+            numero_opciones = ''.join(filter(str.isdigit, primera_linea))
+            total_opciones = int(numero_opciones) if numero_opciones else 0
+        except NoSuchElementException:
+            total_opciones = 0
 
         total_opciones_esperadas = sum(p["opciones"] for p in preguntas)
 
         # Verificar que el total de opciones es correcto
         self.assertEqual(
-            len(total_opciones), total_opciones_esperadas, f"El número total de opciones no es correcto. Esperado: {total_opciones_esperadas}, Encontrado: {len(total_opciones)}"
+            total_opciones, total_opciones_esperadas, f"El número total de opciones no es correcto. Esperado: {total_opciones_esperadas}, Encontrado: {len(total_opciones)}"
         )
 
             
