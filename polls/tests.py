@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -64,11 +63,6 @@ class AdminPanelTests(StaticLiveServerTestCase):
         password_input.send_keys("pirineus")
         password_input.send_keys(Keys.RETURN)
 
-        # Esperem fins que es carregui la pàgina d'administració
-        WebDriverWait(self.selenium, 10).until(
-            EC.presence_of_element_located((By.LINK_TEXT, "Choices"))
-        )
-
         # Accedim a la pàgina de creació d'enquestes
         self.selenium.find_element(By.XPATH, "//a[@href='/admin/polls/question/add/']").click()
 
@@ -96,13 +90,7 @@ class AdminPanelTests(StaticLiveServerTestCase):
         self.selenium.find_element(By.NAME, "_save").click()
 
         # Comprovem que les opcions han estat creades correctament
-        question_id = self.selenium.current_url.split("/")[-2]  # Obtenim l'ID de la pregunta creada
-        self.selenium.get(f"{self.live_server_url}/admin/polls/question/{question_id}/change/")
-
-        # Esperem que es carreguin les opcions
-        WebDriverWait(self.selenium, 10).until(
-            EC.presence_of_all_elements_located((By.NAME, "choice_set-0-choice_text"))
-        )
-
-        choices = self.selenium.find_elements(By.NAME, "choice_set-*-choice_text")
+        self.selenium.find_element(By.XPATH, "//th[@id='polls-choice']/a").click()
+        choices = self.selenium.find_elements(By.XPATH, "//input[contains(@name, 'choice_set-') and contains(@name, '-choice_text')]")
         self.assertEqual(len(choices), 100, "El nombre d'opcions no és correcte")
+
