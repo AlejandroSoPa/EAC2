@@ -93,9 +93,11 @@ class AdminPanelTests(StaticLiveServerTestCase):
         # Verificar que las opciones fueron creadas correctamente
         choices_link = self.selenium.find_element(By.XPATH, "//th[@id='polls-choice']/a")
         choices_link.click()
-        # Contar todas las opciones disponibles en el modelo
-        show_all_link = self.selenium.find_element(By.LINK_TEXT, "Show all")
-        total_opciones = int(show_all_link.text.split(" ")[0])
+        # Localizar el texto del paginador
+        paginator = self.selenium.find_element(By.CLASS_NAME, "paginator")
+        paginator_text = paginator.text.strip()  # Obtener el texto del paginador
+        total_opciones = int(paginator_text.split(" ")[0])  # Extraer el número total de opciones desde el texto
+
         total_opciones_esperadas = sum(p["opciones"] for p in preguntas)
 
         # Verificar que el total de opciones es correcto
