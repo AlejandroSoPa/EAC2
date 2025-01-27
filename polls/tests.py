@@ -71,26 +71,53 @@ class AdminPanelTests(StaticLiveServerTestCase):
         date_input = self.selenium.find_element(By.NAME, "pub_date_0")
         time_input = self.selenium.find_element(By.NAME, "pub_date_1")
 
-        # Introduïm les dades bàsiques de la pregunta
-        question_input.send_keys("Què és millor?")
-        date_input.send_keys("2025-01-01")
-        time_input.send_keys("12:00:00")
+        for j in range(1):
+            if j == 0:
+                question_input.send_keys(f"Pregunta {i + 1}: 100 opciones")
+                date_input.send_keys("2025-01-01")
+                time_input.send_keys("12:00:00")
 
-        # Creem 100 opcions (Choices) utilitzant un bucle
-        for i in range(100):
-            # Localitzem l'input per a la nova opció
-            choice_input = self.selenium.find_element(By.NAME, f"choice_set-{i}-choice_text")
-            choice_input.send_keys(f"Opció {i + 1}")
+                # Creem 100 opcions (Choices) utilitzant un bucle
+                for i in range(100):
+                    # Localitzem l'input per a la nova opció
+                    choice_input = self.selenium.find_element(By.NAME, f"choice_set-{i}-choice_text")
+                    choice_input.send_keys(f"Opcion {i + 1}")
 
-            # Afegeix un nou camp per a una altra opció si no és l'última
-            if i < 99:
-                self.selenium.find_element(By.CSS_SELECTOR, ".add-row a").click()
+                    # Afegeix un nou camp per a una altra opció si no és l'última
+                    if i < 99:
+                        self.selenium.find_element(By.CSS_SELECTOR, ".add-row a").click()
 
-        # Guardem la pregunta
-        self.selenium.find_element(By.NAME, "_save").click()
+                # Guardem la pregunta
+                self.selenium.find_element(By.NAME, "_save").click()
 
-        # Comprovem que les opcions han estat creades correctament
-        self.selenium.find_element(By.XPATH, "//th[@id='polls-choice']/a").click()
-        choices = self.selenium.find_elements(By.XPATH, "//th[@class='field-__str__']/a")
-        self.assertEqual(len(choices), 100, "El nombre d'opcions no és correcte")
+                # Comprovem que les opcions han estat creades correctament
+                self.selenium.find_element(By.XPATH, "//th[@id='polls-choice']/a").click()
+                choices = self.selenium.find_elements(By.XPATH, "//th[@class='field-__str__']/a")
+                self.assertEqual(len(choices), 101, "El nombre d'opcions no és correcte")
+
+            else:
+                question_input.send_keys(f"Pregunta {i + 1}: 1 opcion")
+                date_input.send_keys("2025-01-02")
+                time_input.send_keys("12:00:00")
+
+                # Creem 100 opcions (Choices) utilitzant un bucle
+                for i in range(100):
+                    # Localitzem l'input per a la nova opció
+                    choice_input = self.selenium.find_element(By.NAME, f"choice_set-{i}-choice_text")
+                    choice_input.send_keys(f"Opcion {i + 1}")
+
+                    # Afegeix un nou camp per a una altra opció si no és l'última
+                    if i < 99:
+                        self.selenium.find_element(By.CSS_SELECTOR, ".add-row a").click()
+
+                # Guardem la pregunta
+                self.selenium.find_element(By.NAME, "_save").click()
+
+                # Comprovem que les opcions han estat creades correctament
+                self.selenium.find_element(By.XPATH, "//th[@id='polls-choice']/a").click()
+                choices = self.selenium.find_elements(By.XPATH, "//th[@class='field-__str__']/a")
+                self.assertEqual(len(choices), 101, "El nombre d'opcions no és correcte")
+
+            
+            
 
