@@ -73,7 +73,7 @@ class AdminPanelTests(StaticLiveServerTestCase):
 
         for j in range(1):
             if j == 0:
-                question_input.send_keys(f"Pregunta {i + 1}: 100 opciones")
+                question_input.send_keys(f"Pregunta {j + 1}: 100 opciones")
                 date_input.send_keys("2025-01-01")
                 time_input.send_keys("12:00:00")
 
@@ -95,8 +95,8 @@ class AdminPanelTests(StaticLiveServerTestCase):
                 choices = self.selenium.find_elements(By.XPATH, "//th[@class='field-__str__']/a")
                 self.assertEqual(len(choices), 101, "El nombre d'opcions no és correcte")
 
-            else:
-                question_input.send_keys(f"Pregunta {i + 1}: 1 opcion")
+            elif j == 1:
+                question_input.send_keys(f"Pregunta {j + 1}: 1 opcion")
                 date_input.send_keys("2025-01-02")
                 time_input.send_keys("12:00:00")
 
