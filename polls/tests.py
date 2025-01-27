@@ -108,7 +108,7 @@ class AdminPanelTests(StaticLiveServerTestCase):
 
         # Verificar que el total de opciones es correcto
         self.assertEqual(
-            total_opciones, total_opciones_esperadas, f"El número total de opciones no es correcto. Esperado: {total_opciones_esperadas}, Encontrado: {len(total_opciones)}"
+            total_opciones, total_opciones_esperadas, f"El número total de opciones no es correcto. Esperado: {total_opciones_esperadas}, Encontrado: {total_opciones}"
         )
 
             
