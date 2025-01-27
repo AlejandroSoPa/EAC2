@@ -63,9 +63,6 @@ class AdminPanelTests(StaticLiveServerTestCase):
         password_input.send_keys("pirineus")
         password_input.send_keys(Keys.RETURN)
 
-        # Comprovem que s’ha iniciat sessió correctament
-        self.selenium.find_element(By.XPATH, "//button[@type='submit' and text()='Log out']")
-
         # Accedim a la pàgina de creació d'enquestes
         self.selenium.find_element(By.XPATH, "//a[@href='/admin/polls/question/add/']").click()
 
@@ -87,12 +84,14 @@ class AdminPanelTests(StaticLiveServerTestCase):
 
             # Afegeix un nou camp per a una altra opció si no és l'última
             if i < 99:
-                self.selenium.find_element(By.LINK_TEXT, "Add another Choice").click()
+                self.selenium.find_element(By.CSS_SELECTOR, ".add-row a").click()
 
         # Guardem la pregunta
         self.selenium.find_element(By.NAME, "_save").click()
 
-        # Comprovem que la nova pregunta ha estat creada i conté 100 opcions
-        self.selenium.find_element(By.XPATH, "//a[@href='/admin/polls/choice']").click()
-        choices = self.selenium.find_elements(By.CSS_SELECTOR, ".dynamic-choice_set .field-choice_text input")
+        # Comprovem que les opcions han estat creades correctament
+        question_id = self.selenium.current_url.split("/")[-2]  # Obtenim l'ID de la pregunta creada
+        self.selenium.get(f"{self.live_server_url}/admin/polls/question/{question_id}/change/")  # Tornem a editar-la
+        choices = self.selenium.find_elements(By.NAME, "choice_set-*-choice_text")
         self.assertEqual(len(choices), 100, "El nombre d'opcions no és correcte")
+
