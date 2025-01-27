@@ -90,12 +90,13 @@ class AdminPanelTests(StaticLiveServerTestCase):
             # Guardar la pregunta
             self.selenium.find_element(By.NAME, "_save").click()
 
-            # Verificar que las opciones fueron creadas correctamente
-            self.selenium.find_element(By.XPATH, "//th[@id='polls-choice']/a").click()
-            choices = self.selenium.find_elements(By.XPATH, "//th[@class='field-__str__']/a")
-            self.assertEqual(
-                len(choices), pregunta["opciones"], f"El número de opciones para {pregunta['texto']} no es correcto"
-            )
+        # Verificar que las opciones fueron creadas correctamente
+        choices_link = self.selenium.find_element(By.XPATH, "//th[@id='polls-choice']/a")
+        choices_link.click()
+        choices = self.selenium.find_elements(By.XPATH, "//th[@class='field-__str__']/a")
+        self.assertEqual(
+            len(choices), pregunta["opciones"], f"El número de opciones para {pregunta['texto']} no es correcto"
+        )
 
             
             
