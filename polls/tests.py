@@ -91,6 +91,6 @@ class AdminPanelTests(StaticLiveServerTestCase):
 
         # Comprovem que les opcions han estat creades correctament
         self.selenium.find_element(By.XPATH, "//th[@id='polls-choice']/a").click()
-        choices = self.selenium.find_elements(By.XPATH, "//input[contains(@name, 'choice_set-') and contains(@name, '-choice_text')]")
+        choices = self.selenium.find_elements(By.XPATH, "//th[@class='field-__str__']/a")
         self.assertEqual(len(choices), 100, "El nombre d'opcions no és correcte")
 
