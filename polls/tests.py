@@ -103,7 +103,7 @@ class AdminPanelTests(StaticLiveServerTestCase):
         password_input.send_keys(Keys.RETURN)
 
         # Comprovem que s’ha iniciat sessió correctament
-        self.selenium.find_element(By.XPATH, "//a[@href='/admin/logout/']")
+        self.selenium.find_element(By.XPATH, "//button[@type='submit' and text()='Log out']")
 
         # Accedim a la pàgina de creació d'enquestes
         self.selenium.find_element(By.XPATH, "//a[@href='/admin/polls/question/add/']").click()
