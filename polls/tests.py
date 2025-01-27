@@ -93,6 +93,6 @@ class AdminPanelTests(StaticLiveServerTestCase):
         self.selenium.find_element(By.NAME, "_save").click()
 
         # Comprovem que la nova pregunta ha estat creada i conté 100 opcions
-        self.selenium.find_element(By.LINK_TEXT, "Change").click()
+        self.selenium.find_element(By.XPATH, "//a[@href='/admin/polls/choice']").click()
         choices = self.selenium.find_elements(By.CSS_SELECTOR, ".dynamic-choice_set .field-choice_text input")
         self.assertEqual(len(choices), 100, "El nombre d'opcions no és correcte")
