@@ -98,7 +98,7 @@ class AdminPanelTests(StaticLiveServerTestCase):
             paginator = self.selenium.find_element(By.CLASS_NAME, "paginator")
             paginator_text = paginator.text.strip()
             print(f"Texto del paginador: {repr(paginator_text)}")  # Depuración
-            primera_linea = paginator_text.split("\n")[0]
+            primera_linea = paginator_text.split("\n")[2]
             numero_opciones = ''.join(filter(str.isdigit, primera_linea))
             total_opciones = int(numero_opciones) if numero_opciones else 0
         except NoSuchElementException:
