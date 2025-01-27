@@ -90,9 +90,9 @@ class AdminPanelTests(StaticLiveServerTestCase):
             # Guardar la pregunta
             self.selenium.find_element(By.NAME, "_save").click()
 
-        # Acceder al modelo de opciones (Choices)
-        self.selenium.find_element(By.XPATH, "//th[@id='polls-choice']/a").click()
-
+        # Verificar que las opciones fueron creadas correctamente
+        choices_link = self.selenium.find_element(By.XPATH, "//th[@id='polls-choice']/a")
+        choices_link.click()
         # Contar todas las opciones disponibles en el modelo
         choices = self.selenium.find_elements(By.XPATH, "//th[@class='field-__str__']/a")
         total_opciones_esperadas = sum(p["opciones"] for p in preguntas)
