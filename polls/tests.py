@@ -94,12 +94,12 @@ class AdminPanelTests(StaticLiveServerTestCase):
         choices_link = self.selenium.find_element(By.XPATH, "//th[@id='polls-choice']/a")
         choices_link.click()
         # Contar todas las opciones disponibles en el modelo
-        choices = self.selenium.find_elements(By.XPATH, "//th[@class='field-__str__']/a")
+        total_opciones = int(paginator_text.split(" ")[0])
         total_opciones_esperadas = sum(p["opciones"] for p in preguntas)
 
         # Verificar que el total de opciones es correcto
         self.assertEqual(
-            len(choices), total_opciones_esperadas, f"El número total de opciones no es correcto. Esperado: {total_opciones_esperadas}, Encontrado: {len(choices)}"
+            len(total_opciones), total_opciones_esperadas, f"El número total de opciones no es correcto. Esperado: {total_opciones_esperadas}, Encontrado: {len(total_opciones)}"
         )
 
             
