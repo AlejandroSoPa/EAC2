@@ -78,12 +78,9 @@ class AdminPanelTests(StaticLiveServerTestCase):
             date_input.send_keys("2025-01-01")
             time_input.send_keys("12:00:00")
 
-            # Añadir opciones
             for i in range(pregunta["opciones"]):
-                # Localizar o crear el input para la opción
-                choice_input = WebDriverWait(self.selenium, 10).until(
-                    EC.presence_of_element_located((By.NAME, f"choice_set-{i}-choice_text"))
-                )
+                # Localizar el campo para la opción
+                choice_input = self.selenium.find_element(By.NAME, f"choice_set-{i}-choice_text")
                 choice_input.send_keys(f"Opción {i + 1}")
 
                 # Añadir una nueva fila si no es la última opción
